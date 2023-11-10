@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Lista de Carros</title>
+  </head>
+  <body>
+    <h2>Carros</h2>
+    <div>
+      <a th:href="@{/cars/create}">Cadastrar carro</a>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome do carro</th>
+            <th>Preço</th>
+            <th>Imagem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="car : ${cars}">
+            <td th:text="${car.id}"></td>
+            <td th:text="${car.name}"></td>
+            <td th:text="${car.price}"></td>
+            <td>
+              <div th:id="'image-' + ${car.id}" th:if="${car.image}"></div>
+              <script th:inline="javascript">
+                /*<![CDATA[*/
+                var base64Image = /*[[${car.image} ? ${T(org.springframework.util.Base64Utils).encodeToString(car.image)} : '']]*/ "";
+                var altText = /*[[${car.name}]]*/ "";
+
+                if (base64Image) {
+                  var imgElement = document.createElement("img");
+                  imgElement.src = "data:image/jpeg;base64," + base64Image;
+                  imgElement.alt = altText;
+                  imgElement.style.width = "150px";
+                  imgElement.style.height = "150px";
+
+                  var container = document.getElementById("image-" + /*[[${car.id}]]*/ "");
+                  container.appendChild(imgElement);
+                } else {
+                  console.log("No image available for car id " + /*[[${car.id}]]*/ "");
+                }
+                /*]]>*/
+              </script>
+            </td>
+            <td>
+              <a th:href="@{/cars/edit/{id}(id=${car.id})}">Editar</a>
+              <a th:href="@{/cars/delete/{id}(id=${car.id})}">Deletar</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

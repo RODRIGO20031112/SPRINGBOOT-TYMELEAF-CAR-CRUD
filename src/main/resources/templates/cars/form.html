@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Formulário para cadastro de carros</title>
+  </head>
+  <body>
+    <h2>Formulário para cadastro de carros</h2>
+    <form th:action="@{/cars}" th:object="${car}" method="post" enctype="multipart/form-data">
+      <input type="hidden" th:field="*{id}" />
+      <div>
+        <label for="name">Nome do carro</label>
+        <input type="text" id="name" th:field="*{name}" />
+      </div>
+      <div>
+        <label for="imageFile">Imagem</label>
+        <input type="file" id="imageFile" name="imageFile" accept="image/*" />
+      </div>
+      <div>
+        <label for="description">Descrição</label>
+        <textarea
+          type="text"
+          id="description"
+          th:field="*{description}"
+        ></textarea>
+      </div>
+      <div>
+        <label for="price">Preço</label>
+        <input type="text" id="price" th:field="*{price}" />
+      </div>
+      <div>
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
+  </body>
+</html>
